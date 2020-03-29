@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.4">
-<world name="racecar_tunnel">
+<world name="track_empty">
 
   <include>
     <uri>model://sun</uri>
@@ -45,3 +45,4 @@
 
 </world>
 </sdf>
+
