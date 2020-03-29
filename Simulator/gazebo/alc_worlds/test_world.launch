@@ -1,0 +1,11 @@
+  <launch>
+
+    <arg name="world_name" default="track_barca"/>
+    <arg name="gui" default="true"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find alc_worlds)/$(arg world_name)/$(arg world_name).world"/>
+      <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+  </launch>
