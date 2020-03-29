@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
-<robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find racecar_description)/urdf/macros.xacro" />
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name=''>
+<!--Load the parameters passed in from other launch files -->
+
+  <xacro:include filename="$(find racecar_description)/urdf/macros_gen.xacro" />
 
   <!-- Add chassis and it's inertia link -->
 
@@ -10,7 +12,7 @@
   <link name="chassis">
     <visual>
       <xacro:chassis_geometry/>
-      <material name="red" />
+      <material name="green" />
     </visual>
   </link>
 
@@ -299,7 +301,7 @@
 
   <!-- Add the remaining xacros -->
 
-  <xacro:include filename="$(find racecar_description)/urdf/racecar.gazebo" />
-  <xacro:include filename="$(find racecar_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find racecar_description)/urdf/racecar_gen.gazebo" />
+  <xacro:include filename="$(find racecar_description)/urdf/materials_gen.xacro" />
 
 </robot>
