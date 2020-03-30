@@ -35,7 +35,6 @@
 
   <include>
     <uri>model://track_barca</uri>
-    <pose>-4 2 -.5 0 0 -1.57</pose>
   </include>
 
 
