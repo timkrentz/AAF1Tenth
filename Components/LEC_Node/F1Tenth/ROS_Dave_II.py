@@ -15,22 +15,22 @@ import tensorflow.keras.backend as K
 from preprocessing.utils import ImageUtils
 
 #class needed to publish to car input
-from race.msg import drive_param
+from alc_msgs.msg import Steering_Angle, Velocity
 
 
-class ROS_Daev:
+class ROS_Dave_II:
 
     #define the constructor 
-    def __init__(self,racecar_name,model,height,width):
+    def __init__(self,car_name,model,height,width):
         self.cv_bridge=CvBridge()
-        self.image_topic=str(racecar_name)+'/camera/zed/rgb/image_rect_color'
+        self.image_topic=str(car_name)+'/camera/zed/rgb/image_rect_color'
         self.model=load_model(model,custom_objects={'customAccuracy': self.customAccuracy})
         #this handles the reshaping
         self.util=ImageUtils()
         self.width=width
         self.height=height
 
-        self.pub=rospy.Publisher(racecar_name+'/drive_parameters', drive_param, queue_size=5)
+        self.pub=rospy.Publisher(car_name+'/LEC_steering_angle', Steering_Angle, queue_size=5)
 
 
     #image callback
@@ -47,9 +47,9 @@ class ROS_Daev:
         pred=self.model.predict(predict_image)[0]*0.6108652353
 
         #Want to keep things consistent
-        msg = drive_param()
+        msg = Steering_Angle()
         msg.angle = pred
-        msg.velocity = 1.0
+        # msg.velocity = 1.0
         self.pub.publish(msg)
         
         cv2.imshow("Image fed to network",predict_image[0])
@@ -57,21 +57,22 @@ class ROS_Daev:
         cv2.imshow("Original Image",orig_image)
         cv2.waitKey(3) 
     
-    #define a custom metric for DAEV, accuracy doesn't cut it
+    #define a custom metric for DAVE, accuracy doesn't cut it
     def customAccuracy(self,y_true, y_pred):
         diff = K.abs(y_true-y_pred) #absolute difference between correct and predicted values
         correct = K.less(diff,0.01) #tensor with 0 for false values and 1 for true values
         return K.mean(correct) #sum all 1's and divide by the total. 
 
 if __name__=='__main__':
-    rospy.init_node("ros_daev_node",anonymous=True)
+    rospy.init_node("ros_dave_II_node",anonymous=True)
     #get the arguments passed from the launch file
     args = rospy.myargv()[1:]
     #get the racecar name so we know what to subscribe to
-    racecar_name=args[0]
+    car_name=args[0]
     #get the keras model
     model=args[1]
-    il=ROS_Daev(racecar_name,model,66,200)
+
+    il=ROS_Dave_II(car_name,model,66,200)
     image_sub=rospy.Subscriber(il.image_topic,Image,il.image_callback)
     try: 
         rospy.spin()

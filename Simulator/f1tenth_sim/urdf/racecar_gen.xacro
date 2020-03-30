@@ -17,6 +17,7 @@
   </link>
 
   <joint name="base_link_joint" type="fixed">
+    <!-- <pose>-4 2 -.5 0 0 -1.57</pose> -->
     <origin xyz="0 0 0.05" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="chassis" />
@@ -88,11 +89,11 @@
 
   <link name="left_steering_hinge">
     <inertial>
-      <xacro:steering_hinge_inertial_params />
+      <xacro:steering_hinge_inertial_params/>
     </inertial>
     <visual>
-      <xacro:left_steering_hinge_geometry />
-      <material name="grey" />
+      <xacro:left_steering_hinge_geometry/>
+      <material name="grey"/>
     </visual>
   </link>
 
